@@ -60,7 +60,7 @@ const UserForm = () => {
         <div className="min-h-screen bg-gray-100 flex items-center justify-center py-10 w-full">
             <div className="bg-white p-6 rounded-lg shadow-lg ">
                 
-            <h1 className='text-center text-xl font-bold text-gray-700 mb-6'>User Form (W3 assignment)</h1>
+            <h2 className='text-center text-xl font-bold text-gray-700 mb-6'>User Form (3W assignment)</h2>
                 <div className=" mb-6 ">
                     <h2 className="text-3xl font-semibold text-center text-gray-700 mb-6">Submit Your Info</h2>
 
