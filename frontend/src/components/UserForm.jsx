@@ -35,7 +35,7 @@ const UserForm = () => {
 
         try {
             // Make POST request with axios
-            const response = await axios.post("http://localhost:5000/api/users/add", formData, {
+            const response = await axios.post("https://3w-backend-assign.vercel.app/api/users/add", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },

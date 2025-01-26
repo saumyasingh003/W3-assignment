@@ -11,7 +11,7 @@ const UserTable = () => {
   // Fetch all users
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/users/users");
+      const response = await axios.get("https://3w-backend-assign.vercel.app/api/users/users");
       setUsers(response.data.users);
       toast.success("Users fetched successfully!");
       setLoading(false);
@@ -87,7 +87,7 @@ const UserTable = () => {
                           user.images.map((image, idx) => (
                             <img
                               key={idx}
-                              src={`http://localhost:5000/${image}`}
+                              src={`https://3w-backend-assign.vercel.app/${image}`}
                               alt={`${user.name}'s image ${idx + 1}`}
                               className="w-16 h-16 object-cover rounded-lg shadow-sm hover:shadow-md transition duration-150"
                             />
