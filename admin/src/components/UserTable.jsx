@@ -6,42 +6,85 @@ const UserTable = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [usersPerPage] = useState(5); // Number of users per page
+  const [usersPerPage] = useState(5);
+  const [totalCount, setTotalCount] = useState(0); 
 
-  // Fetch all users
+
   const fetchUsers = async () => {
     try {
+      setLoading(true)
       const response = await axios.get("https://3w-backend-assign.vercel.app/api/users/users");
-      setUsers(response.data.users);
-      toast.success("Users fetched successfully!");
+      const newTotalCount = response.data.totalUsers;
+      
+    
+      if (newTotalCount !== totalCount) {
+        setUsers(response.data.users);
+        setTotalCount(newTotalCount);
+        if (!loading) { 
+          toast.success("New data received!");
+        }
+      }
+      
       setLoading(false);
     } catch (error) {
-      toast.error("Failed to fetch users");
+      if (!loading) {
+        toast.error("Failed to fetch users");
+      }
       setLoading(false);
     }
   };
 
   useEffect(() => {
+    
     fetchUsers();
-  }, []);
+  }, []); 
 
-  // Get current users for pagination
+  
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
   const totalPages = Math.ceil(users.length / usersPerPage);
 
-  // Change page
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [totalCount]);
 
   return (
     <div className="w-full mx-auto p-6 bg-gradient-to-b from-gray-50 to-white shadow-xl rounded-lg">
-      <div className="text-2xl font-bold mb-8 text-center text-gray-800">
+      <div className="text-3xl font-bold mb-8 text-center text-gray-800">
         Admin Dashboard
       </div>
 
+ 
+    <p className="text-center text-gray-800 font-bold ">Total Users: {totalCount}</p>
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={()=>{fetchUsers}}
+          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200 flex items-center gap-2 cursor-pointer"
+        >
+          <svg 
+            className="w-4 h-4" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" 
+            />
+          </svg>
+          Refresh
+        </button>
+      </div>
+
       {loading ? (
-        <div className="flex justify-center  h-44">
+        <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
         </div>
       ) : users.length > 0 ? (

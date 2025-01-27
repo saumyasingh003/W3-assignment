@@ -124,7 +124,7 @@ const UserForm = () => {
                                 className={`w-full py-3 rounded-md transition duration-300 
                                     ${isSubmitting 
                                         ? 'bg-gray-300 cursor-not-allowed' 
-                                        : 'bg-blue-500 hover:bg-blue-600 text-white'
+                                        : 'bg-blue-500 hover:bg-blue-600 text-black'
                                     }`}
                             >
                                 {isSubmitting ? (
