@@ -87,7 +87,7 @@ const UserTable = () => {
                           user.images.map((image, idx) => (
                             <img
                               key={idx}
-                              src={`https://3w-backend-assign.vercel.app/${image}`}
+                              src={image}
                               alt={`${user.name}'s image ${idx + 1}`}
                               className="w-16 h-16 object-cover rounded-lg shadow-sm hover:shadow-md transition duration-150"
                             />

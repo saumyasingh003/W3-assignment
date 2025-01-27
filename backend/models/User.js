@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema(
       required: [true, "Social handle is required"], // Ensure this matches the field name
     },
     images: [{
-      type: String, // This will store the file paths
+      type: String, // This will now store Cloudinary URLs
       required: [true, "Images are required"],
     }],
   },

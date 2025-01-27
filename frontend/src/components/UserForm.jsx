@@ -8,6 +8,7 @@ const UserForm = () => {
     const [socialHandle, setSocialHandle] = useState('');
     const [images, setImages] = useState([]);
     const [previewUrls, setPreviewUrls] = useState([]);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleImageChange = (e) => {
         const files = e.target.files;
@@ -23,11 +24,12 @@ const UserForm = () => {
         e.preventDefault();
 
         // Check if all fields are filled
-        if (!name || !socialHandle || !images.length === 0) {
+        if (!name || !socialHandle || images.length === 0) {
             toast.error("All fields are required!");
             return;
         }
 
+        setIsSubmitting(true);
         const formData = new FormData();
         formData.append("name", name);
         formData.append("socialHandle", socialHandle);
@@ -43,16 +45,17 @@ const UserForm = () => {
 
             if (response.status === 200) {
                 toast.success("Form submitted successfully!");
-        
+                
+                // Reset form
                 setName('');
                 setSocialHandle('');
                 setImages([]);
                 setPreviewUrls([]);
-            
-                
             }
         } catch (error) {
             toast.error("Server error. Please try again.");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -77,6 +80,7 @@ const UserForm = () => {
                                 onChange={(e) => setName(e.target.value)}
                                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="Enter your name"
+                                disabled={isSubmitting}
                             />
                         </div>
 
@@ -92,6 +96,7 @@ const UserForm = () => {
                                 onChange={(e) => setSocialHandle(e.target.value)}
                                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 placeholder="Enter your social handle"
+                                disabled={isSubmitting}
                             />
                         </div>
 
@@ -107,6 +112,7 @@ const UserForm = () => {
                                 accept="image/*"
                                 multiple
                                 className="w-full p-2    border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                disabled={isSubmitting}
                             />
                         </div>
 
@@ -114,9 +120,21 @@ const UserForm = () => {
                         <div className="text-center mt-6">
                             <button
                                 type="submit"
-                                className="w-full text-black py-3 rounded-md hover:bg-blue-600 transition duration-300"
+                                disabled={isSubmitting}
+                                className={`w-full py-3 rounded-md transition duration-300 
+                                    ${isSubmitting 
+                                        ? 'bg-gray-300 cursor-not-allowed' 
+                                        : 'bg-blue-500 hover:bg-blue-600 text-white'
+                                    }`}
                             >
-                                Submit
+                                {isSubmitting ? (
+                                    <div className="flex items-center justify-center">
+                                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                                        Submitting...
+                                    </div>
+                                ) : (
+                                    'Submit'
+                                )}
                             </button>
                         </div>
                     </form>
