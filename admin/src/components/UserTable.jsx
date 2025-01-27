@@ -63,7 +63,7 @@ const UserTable = () => {
     <p className="text-center text-gray-800 font-bold ">Total Users: {totalCount}</p>
       <div className="flex justify-end mb-4">
         <button
-          onClick={()=>{fetchUsers}}
+          onClick={()=>{fetchUsers()}}
           className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-200 flex items-center gap-2 cursor-pointer"
         >
           <svg 
